@@ -1,10 +1,16 @@
+//importing geocode and forecast module(own created modules)
 const geocode=require('./utils/geocode')
 const forecast=require('./utils/forecast')
+//importing path module to manupulate paths
 const path = require('path')
+//importing express to use it
 const express = require('express')
+//hbs module is to use handle bars(views and partials)
 const hbs = require('hbs')
-
+//creating instance of express appliation
 const app = express()
+//defining port
+const port=process.env.PORT || 3000
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -16,9 +22,11 @@ app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
-// Setup static directory to serve
+// Setup static directory to serve(public folder)
 app.use(express.static(publicDirectoryPath))
 
+//app.get is used to make reach to a url which take partial url and a call back method
+//app.send to load a static page and render to load a dynamic page
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
@@ -108,6 +116,6 @@ app.get('*', (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-    console.log('Server is up on port 3000.');
+app.listen(port, () => {
+    console.log('Server is up on port '+port);
 })
